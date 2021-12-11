@@ -1,0 +1,85 @@
+import React from 'react';
+import {
+  Aside as AsideUI,
+  loadTheme,
+  toggleTheme,
+  Switch,
+  Content,
+  colors,
+  Icon as NoticonIcon,
+} from 'notion-ui';
+import styled from '@emotion/styled';
+import Icon from '../Icon';
+
+export default function Aside() {
+  const theme = loadTheme();
+  const [isDark, setIsDark] = React.useState(theme === 'Dark');
+  const handleToggleTheme = React.useCallback(() => {
+    setIsDark(!isDark);
+    toggleTheme();
+  }, [setIsDark, isDark]);
+
+  return (
+    <Column>
+      <Content.Spacing size={20} />
+      <Flex />
+      <BottomMenus>
+        <ThemeMenu onClick={handleToggleTheme}>
+          <Content.Text as="P" color={colors.grey60}>
+            <NoticonIcon icon="halfMoon" />
+            <span>Dark Mode</span>
+          </Content.Text>
+          <Switch switchOn={isDark} />
+        </ThemeMenu>
+      </BottomMenus>
+    </Column>
+  );
+}
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+`;
+
+const Flex = styled.div`
+  flex: 1;
+`;
+
+const BottomMenus = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+`;
+
+const GithubMenu = styled(AsideUI.Menu)`
+  flex-basis: 45px;
+  p {
+    padding: 0;
+  }
+  && svg {
+    width: 16px;
+  }
+`;
+
+const ThemeMenu = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 45px;
+  padding: 2px 14px;
+  cursor: pointer;
+  p {
+    padding: 0;
+  }
+  &:hover {
+    background-color: ${colors.grey08};
+  }
+  &:active {
+    background-color: ${colors.grey16};
+  }
+  span {
+    padding: 0 0 0 8px;
+  }
+`;
