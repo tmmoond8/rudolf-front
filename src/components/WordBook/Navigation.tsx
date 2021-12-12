@@ -61,7 +61,7 @@ const Navigation = styled.ul`
   padding: 8px 0;
 
   li {
-    width: 40px;
+    width: 32px;
   }
 
   .current-page {

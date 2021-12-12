@@ -5,29 +5,38 @@ import Link from 'next/link';
 import Image from './Image';
 import { getDateGoodLook } from '../libs/string';
 import { desktop } from '../styles';
-import { wordbooks } from '../types/model';
+import type { WordBook } from '../types/model';
 
-export default function WordBookGallery() {
+interface Props {
+  wordBooks: WordBook[];
+}
+
+export default function WordBookGallery({ wordBooks }: Props) {
   return (
     <Grid>
-      {wordbooks.map(({ id, title, description, coverImage, createdAt }) => (
-        <Link key={id} href={`/wordbook/${id}`}>
-          <PostCard>
-            <CoverImage src={coverImage} width={500} height={260} />
-            <PostBody>
-              <Content.Text as="H3" fontSize={20}>
-                {title}
-              </Content.Text>
-              <Description marginTop={8} as="P">
-                {description}
-              </Description>
-              <PostInfo>
-                <Date fontSize={14}>{getDateGoodLook(createdAt)}</Date>
-              </PostInfo>
-            </PostBody>
-          </PostCard>
-        </Link>
-      ))}
+      {wordBooks.map(
+        ({
+          id,
+          attributes: { coverImage, title = 'title', description, createdAt },
+        }) => (
+          <Link key={id} href={`/wordbook/${id}`}>
+            <PostCard>
+              <CoverImage src={coverImage} width={500} height={260} />
+              <PostBody>
+                <Content.Text as="H3" fontSize={20}>
+                  {title}
+                </Content.Text>
+                <Description marginTop={8} as="P">
+                  {description}
+                </Description>
+                <PostInfo>
+                  <Date fontSize={14}>{getDateGoodLook(createdAt)}</Date>
+                </PostInfo>
+              </PostBody>
+            </PostCard>
+          </Link>
+        )
+      )}
     </Grid>
   );
 }

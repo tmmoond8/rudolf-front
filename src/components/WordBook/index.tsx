@@ -2,37 +2,39 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { colors } from 'notion-ui';
-import { wordbooks } from '../../types/model';
+// import { wordbooks } from '../../types/model';
 import Navigation, { usePageNavigation } from './Navigation';
 
 export default function WordBook() {
   const router = useRouter();
   const { slug } = router.query;
-  const wordbook = React.useMemo(() => {
-    return wordbooks.find(({ id }) => slug?.toString() === id.toString());
-  }, [router.query.slug]);
-  const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
-    wordbook?.contents.length ?? 0
-  );
-  const wordBundle = React.useMemo(() => {
-    return (
-      wordbook?.contents.slice((page - 1) * pageSize, page * pageSize) ?? []
-    );
-  }, [wordbook, page, pageSize]);
+  // const wordbook = React.useMemo(() => {
+  //   return wordbooks.find(({ id }) => slug?.toString() === id.toString());
+  // }, [router.query.slug]);
+  // const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
+  //   wordbook?.contents.length ?? 0
+  // );
+  // const wordBundle = React.useMemo(() => {
+  //   return (
+  //     wordbook?.contents.slice((page - 1) * pageSize, page * pageSize) ?? []
+  //   );
+  // }, [wordbook, page, pageSize]);
 
   return (
     <Wrapper>
-      <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} />
+      {/* <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} /> */}
       <List>
-        {wordBundle.map(({ word, description }, idx) => (
+        {/* {wordBundle.map(({ word, description }, idx) => (
           <Item key={`${idx}-${word}`}>
-            <span className="word-number">{idx}</span>
+            <span className="word-number">
+              {idx + 1 + pageSize * (page - 1)}
+            </span>
             <dl>
               <dt>{word}</dt>
               <dd>{description}</dd>
             </dl>
           </Item>
-        ))}
+        ))} */}
       </List>
     </Wrapper>
   );
@@ -43,20 +45,22 @@ const Wrapper = styled.main`
 `;
 
 const List = styled.ol`
-  width: 400px;
+  max-width: 400px;
   margin: 0 auto;
 `;
 
 const Item = styled.li`
   display: flex;
   align-items: center;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: ${colors.grey08};
 
   .word-number {
-    display: flex;
-    justify-content: flex-end;
-    width: 48px;
+    min-width: 24px;
     color: ${colors.red50};
-    padding: 0 16px;
+    font-size: 10px;
+    padding: 0 12px 0 0;
   }
 
   dl {
@@ -65,9 +69,6 @@ const Item = styled.li`
     justify-content: space-between;
     flex: 1;
     color: ${colors.grey60};
-    padding: 8px 16px;
-    border-radius: 6px;
-    background-color: ${colors.grey08};
   }
 
   dl > dt {
@@ -76,6 +77,7 @@ const Item = styled.li`
 
   dl > dd {
     font-size: 12px;
+    line-height: 16px;
   }
 
   & + & {
