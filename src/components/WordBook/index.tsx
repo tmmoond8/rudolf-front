@@ -1,30 +1,26 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { colors } from 'notion-ui';
-// import { wordbooks } from '../../types/model';
+import type { WordBook as WordBookType } from '../../types/model';
 import Navigation, { usePageNavigation } from './Navigation';
 
-export default function WordBook() {
-  const router = useRouter();
-  const { slug } = router.query;
-  // const wordbook = React.useMemo(() => {
-  //   return wordbooks.find(({ id }) => slug?.toString() === id.toString());
-  // }, [router.query.slug]);
-  // const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
-  //   wordbook?.contents.length ?? 0
-  // );
-  // const wordBundle = React.useMemo(() => {
-  //   return (
-  //     wordbook?.contents.slice((page - 1) * pageSize, page * pageSize) ?? []
-  //   );
-  // }, [wordbook, page, pageSize]);
+interface Props {
+  contents: WordBookType['attributes']['contents'];
+}
+
+export default function WordBook({ contents }: Props) {
+  const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
+    contents.length ?? 0
+  );
+  const wordBundle = React.useMemo(() => {
+    return contents.slice((page - 1) * pageSize, page * pageSize) ?? [];
+  }, [contents, page, pageSize]);
 
   return (
     <Wrapper>
-      {/* <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} /> */}
+      <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} />
       <List>
-        {/* {wordBundle.map(({ word, description }, idx) => (
+        {wordBundle.map(({ word, description }, idx) => (
           <Item key={`${idx}-${word}`}>
             <span className="word-number">
               {idx + 1 + pageSize * (page - 1)}
@@ -34,7 +30,7 @@ export default function WordBook() {
               <dd>{description}</dd>
             </dl>
           </Item>
-        ))} */}
+        ))}
       </List>
     </Wrapper>
   );

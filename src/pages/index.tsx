@@ -2,14 +2,14 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import WordBookGallery from '../components/WordBookGallery';
-import type { WordBook } from '../types/model';
 import { useSWR } from '../libs/swr';
 
 const Home: NextPage = () => {
-  const { data } = useSWR<WordBook[]>('/api/words-notes');
+  const { data } = useSWR<any>('/api/words-notes');
   const wordBooks = React.useMemo(() => {
     return data?.data ?? [];
   }, [data]);
+
   return (
     <div>
       <Head>

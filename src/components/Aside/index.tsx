@@ -9,7 +9,6 @@ import {
   Icon as NoticonIcon,
 } from 'notion-ui';
 import styled from '@emotion/styled';
-import Icon from '../Icon';
 
 export default function Aside() {
   const theme = loadTheme();
