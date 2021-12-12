@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { colors, Content } from 'notion-ui';
+import { colors } from 'notion-ui';
 import { wordbooks } from '../../types/model';
+import Navigation, { usePageNavigation } from './Navigation';
 
 export default function WordBook() {
   const router = useRouter();
   const { slug } = router.query;
-  const [pageSize, setPageSize] = React.useState(20);
   const wordbook = React.useMemo(() => {
     return wordbooks.find(({ id }) => slug?.toString() === id.toString());
   }, [router.query.slug]);
-  const [page, setPage] = React.useState(1);
+  const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
+    wordbook?.contents.length ?? 0
+  );
   const wordBundle = React.useMemo(() => {
     return (
       wordbook?.contents.slice((page - 1) * pageSize, page * pageSize) ?? []
@@ -20,6 +22,7 @@ export default function WordBook() {
 
   return (
     <Wrapper>
+      <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} />
       <List>
         {wordBundle.map(({ word, description }, idx) => (
           <Item key={`${idx}-${word}`}>
@@ -36,7 +39,7 @@ export default function WordBook() {
 }
 
 const Wrapper = styled.main`
-  padding: 40px 24px;
+  padding: 24px;
 `;
 
 const List = styled.ol`
@@ -52,7 +55,7 @@ const Item = styled.li`
     display: flex;
     justify-content: flex-end;
     width: 48px;
-    color: ${colors.red};
+    color: ${colors.red50};
     padding: 0 16px;
   }
 
