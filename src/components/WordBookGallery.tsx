@@ -47,11 +47,8 @@ const Grid = styled.ol`
   position: relative;
   grid-template-columns: 1fr;
   grid-gap: 2rem;
-  padding: 36px 16px;
 
   ${desktop(css`
-    max-width: 900px;
-    margin: 0 auto;
     grid-template-columns: repeat(2, 1fr);
   `)}
 `;

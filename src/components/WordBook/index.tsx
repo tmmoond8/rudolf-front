@@ -3,12 +3,13 @@ import styled from '@emotion/styled';
 import { colors } from 'notion-ui';
 import type { WordBook as WordBookType } from '../../types/model';
 import Navigation, { usePageNavigation } from './Navigation';
+import WordBookEditor from './WordBookEditor';
 
 interface Props {
   contents: WordBookType['attributes']['contents'];
 }
 
-export default function WordBook({ contents }: Props) {
+const WordBook = ({ contents }: Props) => {
   const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
     contents.length ?? 0
   );
@@ -17,7 +18,7 @@ export default function WordBook({ contents }: Props) {
   }, [contents, page, pageSize]);
 
   return (
-    <Wrapper>
+    <>
       <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} />
       <List>
         {wordBundle.map(({ word, description }, idx) => (
@@ -32,13 +33,13 @@ export default function WordBook({ contents }: Props) {
           </Item>
         ))}
       </List>
-    </Wrapper>
+    </>
   );
-}
+};
 
-const Wrapper = styled.main`
-  padding: 24px;
-`;
+WordBook.Editor = WordBookEditor;
+
+export default WordBook;
 
 const List = styled.ol`
   max-width: 400px;
