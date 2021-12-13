@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Content, colors } from 'notion-ui';
 import Link from 'next/link';
 import Image from './Image';
-import { getDateGoodLook } from '../libs/string';
+import { getDateGoodLook } from '../libs';
 import { desktop } from '../styles';
 import type { WordBook } from '../types/model';
 

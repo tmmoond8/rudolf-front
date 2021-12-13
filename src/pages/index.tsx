@@ -2,7 +2,7 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import WordBookGallery from '../components/WordBookGallery';
-import { useSWR } from '../libs/swr';
+import { useSWR } from '../apis';
 
 const Home: NextPage = () => {
   const { data } = useSWR<any>('/api/words-notes');

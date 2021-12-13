@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import WrodBook from '../../components/WordBook';
 import type { WordBook as WordBookType } from '../../types/model';
-import { useSWR } from '../../libs/swr';
+import { useSWR } from '../../apis';
 
 export default function WordBookPage() {
   const router = useRouter();
