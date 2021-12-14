@@ -1,63 +1,88 @@
 import React from 'react';
-import { colors } from 'notion-ui';
 import styled from '@emotion/styled';
+import SpreadSheet from 'react-spreadsheet';
+import { colors } from 'notion-ui';
+import { debounce } from 'throttle-debounce';
 
 export default function WordBookEditor() {
-  const cells = React.useRef([]);
+  const [wordBook, setWordBook] = React.useState(
+    Array.from({ length: 10 }).map((_) => [
+      {
+        value: '',
+      },
+      {
+        value: '',
+      },
+    ])
+  );
+  const handleOnChange = debounce(
+    300,
+    React.useCallback((d) => {
+      console.log('d', d);
+    }, [])
+  );
+
+  console.log('wordBook', wordBook);
+  const HeaderRow = () => (
+    <tr>
+      <th className="Spreadsheet__header">순번</th>
+      <th className="Spreadsheet__header">단어</th>
+      <th className="Spreadsheet__header">뜻</th>
+    </tr>
+  );
+
   return (
-    <div>
-      <Table>
-        <thead>
-          {/* <th>순서</th> */}
-          <tr>
-            <th>단어</th>
-            <th>뜻</th>
-          </tr>
-        </thead>
-        <tbody>
-          {'abcsdf'.split('').map((_, idx) => (
-            <tr key={`word-row-${idx}`}>
-              <td>
-                <input type="text"></input>
-              </td>
-              <td>
-                <input type="text"></input>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+    <Wrapper>
+      <SpreadSheet
+        data={wordBook}
+        onChange={handleOnChange}
+        HeaderRow={HeaderRow}
+      />
+    </Wrapper>
   );
 }
 
-const Table = styled.table`
-  max-width: 500px;
+const Wrapper = styled.div`
+  max-width: 700px;
   width: 100%;
   margin: 0 auto;
-  text-align: center;
-  color: ${colors.grey60};
-  thead {
-    width: 100%;
-    color: ${colors.grey16};
-  }
 
-  thead > tr > th,
-  tbody > tr > td {
-    height: 32px;
-    line-height: 31px;
-    padding: 0;
-    margin: 0;
-    border: 1px solid ${colors.grey08};
-  }
-
-  td > input {
+  .Spreadsheet {
     width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
     color: ${colors.grey60};
-    padding: 4px 8px;
-    outline: none;
+    background-color: ${colors.transparent};
+
+    table {
+      width: 100%;
+      colgroup col:nth-child(1) {
+        width: 60px;
+      }
+
+      tr {
+        line-height: 1.4em;
+      }
+
+      th,
+      td {
+        background-color: ${colors.transparent};
+        text-align: center;
+      }
+      tbody tr .Spreadsheet__header {
+        font-size: 12px;
+        color: ${colors.red};
+        border: none;
+      }
+    }
+
+    .Spreadsheet__active-cell,
+    .Spreadsheet__floating-rect--selected,
+    .Spreadsheet__floating-rect--copied {
+      background: ${colors.grey16};
+      border: 2px ${colors.red50} solid;
+    }
+
+    .Spreadsheet__data-editor {
+      background-color: ${colors.backgroundEmbed};
+    }
   }
 `;
