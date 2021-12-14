@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import useOriginSWR, { SWRConfiguration } from 'swr';
 import { request } from './config';
+import type { ResponseLogin, WordBook } from '../types/model';
 
 const fetcher = (url: string) => {
   return request
@@ -16,16 +17,6 @@ export const useSWR = <T>(url: string, option?: SWRConfiguration) => {
   });
 };
 
-interface ResponseLogin {
-  jwt: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    provider: 'local';
-  };
-}
-
 const auth = {
   login: (identifier: string, password: string) =>
     request
@@ -36,6 +27,16 @@ const auth = {
       .then((res) => res.data as ResponseLogin),
 };
 
+const wordNote = {
+  post: (data: Partial<WordBook['attributes']>) =>
+    request
+      .post('/api/words-notes', {
+        data,
+      })
+      .then((res) => res.data as any),
+};
+
 export default {
   auth,
+  wordNote,
 };
