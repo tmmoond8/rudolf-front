@@ -18,3 +18,14 @@ export interface ResponseLogin {
     provider: 'local';
   };
 }
+
+export interface User {
+  id: number;
+  provider: 'local';
+  username: string;
+  email: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

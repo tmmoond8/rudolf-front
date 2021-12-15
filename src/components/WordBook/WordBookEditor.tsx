@@ -34,7 +34,7 @@ export default function WordBookEditor() {
       description,
       contents: wordBookStringify(wordBook),
       coverImage:
-        'https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1632299645/tlog/cover/kakao_login_eecddz.png?w=1080&q=75',
+        'https://user-images.githubusercontent.com/11402468/146219166-e024ce4e-4e9a-4da2-90bc-83e50015283c.jpeg?w=256&q=75',
     });
   };
 

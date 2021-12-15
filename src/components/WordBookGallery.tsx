@@ -20,20 +20,20 @@ export default function WordBookGallery({ wordBooks }: Props) {
           attributes: { coverImage, title = 'title', description, createdAt },
         }) => (
           <Link key={id} href={`/wordbook/${id}`}>
-            <PostCard>
-              <CoverImage src={coverImage} width={500} height={260} />
-              <PostBody>
+            <WordBookCard>
+              <CoverImage src={coverImage} width={137} height={200} />
+              <WordBookBody>
                 <Content.Text as="H3" fontSize={20}>
                   {title}
                 </Content.Text>
                 <Description marginTop={8} as="P">
                   {description}
                 </Description>
-                <PostInfo>
+                <WordBookInfo>
                   <Date fontSize={14}>{getDateGoodLook(createdAt)}</Date>
-                </PostInfo>
-              </PostBody>
-            </PostCard>
+                </WordBookInfo>
+              </WordBookBody>
+            </WordBookCard>
           </Link>
         )
       )}
@@ -53,9 +53,8 @@ const Grid = styled.ol`
   `)}
 `;
 
-const PostCard = styled.li`
+const WordBookCard = styled.li`
   display: flex;
-  flex-direction: column;
   border-radius: 4px;
   border: 1px solid ${colors.grey32};
   overflow: hidden;
@@ -67,33 +66,18 @@ const PostCard = styled.li`
   }
 `;
 
-const PostBody = styled.article`
+const WordBookBody = styled.article`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 8px 16px 16px;
 `;
 
-const PostInfo = styled.div`
+const WordBookInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 24px;
-`;
-
-const Tags = styled.ol`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-
-  li {
-    background-color: ${colors.grey08};
-    padding: 8px 6px 6px 6px;
-    color: ${colors.red};
-    border-radius: 3px;
-    margin: 8px 8px 0 0;
-    font-size: 14px;
-  }
 `;
 
 const Date = styled(Content.Text)`
