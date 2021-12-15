@@ -13,14 +13,26 @@ const WordBook = ({ contents }: Props) => {
   const { page, pageSize, prevs, nexts, setPage } = usePageNavigation(
     contents.length ?? 0
   );
+  const listRef = React.useRef<HTMLOListElement>();
   const wordBundle = React.useMemo(() => {
     return contents.slice((page - 1) * pageSize, page * pageSize) ?? [];
   }, [contents, page, pageSize]);
+  const handleSetPage = (page: number) => {
+    setPage(page);
+    if (listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
+  };
 
   return (
     <>
-      <Navigation page={page} prevs={prevs} nexts={nexts} setPage={setPage} />
-      <List>
+      <Navigation
+        page={page}
+        prevs={prevs}
+        nexts={nexts}
+        setPage={handleSetPage}
+      />
+      <List ref={listRef as React.LegacyRef<HTMLOListElement>}>
         {wordBundle.map(({ word, description }, idx) => (
           <Item key={`${idx}-${word}`}>
             <span className="word-number">
@@ -43,7 +55,10 @@ export default WordBook;
 
 const List = styled.ol`
   max-width: 400px;
+  height: 100%;
   margin: 0 auto;
+  padding: 20px 0 68px 0;
+  overflow: auto;
 `;
 
 const Item = styled.li`

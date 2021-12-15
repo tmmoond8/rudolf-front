@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import WrodBook from '../../components/WordBook';
 import Layout from '../../components/Layout';
@@ -10,7 +11,7 @@ export default function WordBookPage() {
   const { slug } = router.query;
   const isNew = slug === 'new';
   const { data } = useSWR<WordBookType>(`/api/words-notes/${slug}`, {
-    isPaused: () => isNew,
+    isPaused: () => isNew || !slug,
   });
   const wordBook = React.useMemo(() => {
     return data?.data ?? null;
@@ -22,8 +23,16 @@ export default function WordBookPage() {
 
   return (
     <Layout>
-      {isNew && <WrodBook.Editor />}
-      {!isNew && <WrodBook contents={contents} />}
+      <Wrapper>
+        {isNew && <WrodBook.Editor />}
+        {!isNew && <WrodBook contents={contents} />}
+      </Wrapper>
     </Layout>
   );
 }
+
+const Wrapper = styled.div`
+  margin: 20px 0;
+  height: calc(100% - 40px);
+  overflow: hidden;
+`;

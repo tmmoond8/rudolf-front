@@ -1,12 +1,18 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export default function Layout({ children }: { children?: React.ReactNode }) {
+interface Props {
+  children?: React.ReactNode;
+}
+
+export default function Layout({ children }: Props) {
   return <Main>{children}</Main>;
 }
 
-const Main = styled.main`
+const Main = styled.main<{ padding?: string }>`
   max-width: 900px;
   height: 100%;
-  margin: 20px auto;
-  padding: 36px 16px;
+  margin: 0 auto;
+  padding: 0 16px;
+  overflow: hidden;
 `;
