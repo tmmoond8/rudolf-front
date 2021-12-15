@@ -5,6 +5,7 @@ import * as NotionUI from 'notion-ui';
 import styled from '@emotion/styled';
 import GlobalStyles from '../styles/globalStyles';
 import Aside from '../components/Aside';
+import GNB from '../components/GNB';
 
 function RudolfApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -25,8 +26,8 @@ function RudolfApp({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <AppLayout
         aside={<Aside />}
-        leftMenus={<NotionUI.Content.Text>영단어</NotionUI.Content.Text>}
-        rightMenus={<div></div>}
+        leftMenus={<GNB.Left />}
+        rightMenus={<GNB.Right />}
         center={<div></div>}
       >
         {isLoading ? (

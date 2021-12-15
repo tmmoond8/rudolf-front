@@ -11,7 +11,7 @@ const fetcher = (url: string) => {
 };
 
 export const useSWR = <T>(url: string, option?: SWRConfiguration) => {
-  return useOriginSWR<AxiosResponse<T>>(url, {
+  return useOriginSWR<T>(url, {
     ...option,
     fetcher,
   });
@@ -34,6 +34,12 @@ const wordNote = {
         data,
       })
       .then((res) => res.data as any),
+};
+
+export const APIS = {
+  USER: {
+    ME: '/api/users/me',
+  },
 };
 
 export default {
