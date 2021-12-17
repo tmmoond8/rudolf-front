@@ -20,14 +20,7 @@ export default function SpreadsheetEditor({
 }) {
   return (
     <Wrapper>
-      <Spreadsheet
-        data={data}
-        onChange={onChange}
-        HeaderRow={HeaderRow}
-        onCellCommit={() => {
-          console.log('commi');
-        }}
-      />
+      <Spreadsheet data={data} onChange={onChange} HeaderRow={HeaderRow} />
     </Wrapper>
   );
 }
