@@ -1,3 +1,4 @@
+import type { Matrix } from 'react-spreadsheet';
 export interface WordBook {
   id: number;
   attributes: {
@@ -29,3 +30,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Cell {
+  value: string;
+}
+
+export type SpreadsheetData = Matrix<Cell>;

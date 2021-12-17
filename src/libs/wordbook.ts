@@ -1,6 +1,8 @@
-export const wordBookStringify = (spreadsheet: { value: string }[][]) =>
+import type { SpreadsheetData } from '../types/model';
+
+export const wordBookStringify = (spreadsheet: SpreadsheetData) =>
   JSON.stringify(
-    spreadsheet.map(([{ value: word }, { value: description }]) => ({
+    spreadsheet.map(([{ value: word }, { value: description }]: any) => ({
       word,
       description,
     }))

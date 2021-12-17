@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import SpreadSheet from 'react-spreadsheet';
 import { TextField, Content, Button, colors } from 'notion-ui';
 import { debounce } from 'throttle-debounce';
+import type { SpreadsheetData } from '../../types/model';
 import APIS from '../../apis';
 import { wordBookStringify } from '../../libs';
+import SpreadSheetEditor from './SpreadsheetEditor';
 
 export default function WordBookEditor() {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
-  const [wordBook, setWordBook] = React.useState(
+  const [wordBook, setWordBook] = React.useState<SpreadsheetData>(
     Array.from({ length: 10 }).map((_) => [
       {
         value: '',
@@ -22,29 +23,25 @@ export default function WordBookEditor() {
   );
   const handleOnChange = debounce(
     300,
-    React.useCallback((data) => {
+    React.useCallback((data: SpreadsheetData) => {
       setWordBook(data);
     }, [])
   );
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    await APIS.wordNote.post({
-      title,
-      description,
-      contents: wordBookStringify(wordBook),
-      coverImage:
-        'https://user-images.githubusercontent.com/11402468/146219166-e024ce4e-4e9a-4da2-90bc-83e50015283c.jpeg?w=256&q=75',
-    });
+    try {
+      await APIS.wordNote.post({
+        title,
+        description,
+        contents: wordBookStringify(wordBook),
+        coverImage:
+          'https://user-images.githubusercontent.com/11402468/146219166-e024ce4e-4e9a-4da2-90bc-83e50015283c.jpeg?w=256&q=75',
+      });
+    } catch (error) {
+      console.error('error', error);
+    }
   };
-
-  const HeaderRow = () => (
-    <tr>
-      <th className="Spreadsheet__header">순번</th>
-      <th className="Spreadsheet__header">단어</th>
-      <th className="Spreadsheet__header">뜻</th>
-    </tr>
-  );
 
   return (
     <Wrapper>
@@ -79,11 +76,7 @@ export default function WordBookEditor() {
           </Button>
         </div>
       </Form>
-      <SpreadSheet
-        data={wordBook}
-        onChange={handleOnChange}
-        HeaderRow={HeaderRow}
-      />
+      <SpreadSheetEditor data={wordBook} onChange={handleOnChange} />
     </Wrapper>
   );
 }
@@ -92,45 +85,7 @@ const Wrapper = styled.div`
   max-width: 700px;
   width: 100%;
   margin: 0 auto;
-
-  .Spreadsheet {
-    width: 100%;
-    color: ${colors.grey60};
-    background-color: ${colors.transparent};
-
-    table {
-      width: 100%;
-      colgroup col:nth-child(1) {
-        width: 60px;
-      }
-
-      tr {
-        line-height: 1.4em;
-      }
-
-      th,
-      td {
-        background-color: ${colors.transparent};
-        text-align: center;
-      }
-      tbody tr .Spreadsheet__header {
-        font-size: 12px;
-        color: ${colors.red};
-        border: none;
-      }
-    }
-
-    .Spreadsheet__active-cell,
-    .Spreadsheet__floating-rect--selected,
-    .Spreadsheet__floating-rect--copied {
-      background: ${colors.grey16};
-      border: 2px ${colors.red50} solid;
-    }
-
-    .Spreadsheet__data-editor {
-      background-color: ${colors.backgroundEmbed};
-    }
-  }
+  padding: 0 0 44px 0;
 `;
 
 const Form = styled.form`
