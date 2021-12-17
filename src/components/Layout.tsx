@@ -13,6 +13,5 @@ const Main = styled.main<{ padding?: string }>`
   max-width: 900px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 16px;
-  overflow: hidden;
+  padding: 12px 16px;
 `;

@@ -57,9 +57,8 @@ export default WordBook;
 
 const List = styled.ol`
   max-width: 400px;
-  height: 100%;
   margin: 0 auto;
-  padding: 20px 0 68px 0;
+  padding: 60px 0 68px 0;
   overflow: auto;
 `;
 

@@ -20,8 +20,6 @@ export default function WordBookPage() {
     }
   );
 
-  console.log('data', data);
-
   const wordBook = React.useMemo(() => {
     if (data) {
       if (data.data?.attributes.title) {
@@ -47,7 +45,5 @@ export default function WordBookPage() {
 }
 
 const Wrapper = styled.div`
-  margin: 20px 0;
   height: calc(100% - 40px);
-  overflow: hidden;
 `;

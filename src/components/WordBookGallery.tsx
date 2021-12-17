@@ -57,7 +57,6 @@ const WordBookCard = styled.li`
   display: flex;
   border-radius: 4px;
   border: 1px solid ${colors.grey32};
-  overflow: hidden;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   :hover {
@@ -88,7 +87,6 @@ const Description = styled(Content.Text)`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
   align-items: flex-start;
   height: 58px;
   line-height: 26px;

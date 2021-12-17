@@ -1,6 +1,8 @@
 import React from 'react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { colors, Button, IconButton } from 'notion-ui';
+import { desktop } from '../../styles';
 
 interface Props {
   page: number;
@@ -55,10 +57,18 @@ export default function ({ prevs, page, nexts, setPage }: Props) {
 
 const Navigation = styled.ul`
   display: flex;
+  position: fixed;
+  left: calc(50%);
+  top: 45px;
   width: fit-content;
   margin: 0 auto;
   color: ${colors.grey60};
-  padding: 8px 0;
+  padding: 8px 82px 22px;
+  backdrop-filter: blur(5px);
+  transform: translateX(-50%);
+  ${desktop(css`
+    left: calc((100% + 240px) / 2);
+  `)}
 
   li {
     width: 32px;
