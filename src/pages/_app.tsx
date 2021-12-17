@@ -6,9 +6,11 @@ import styled from '@emotion/styled';
 import GlobalStyles from '../styles/globalStyles';
 import Aside from '../components/Aside';
 import GNB from '../components/GNB';
+import { useTitle } from '../hooks';
 
 function RudolfApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const { title } = useTitle();
 
   React.useEffect(() => {
     Router.events.on('routeChangeStart', () => {
@@ -28,7 +30,7 @@ function RudolfApp({ Component, pageProps }: AppProps) {
         aside={<Aside />}
         leftMenus={<GNB.Left />}
         rightMenus={<GNB.Right />}
-        center={<div></div>}
+        center={<NotionUI.Content.Text>{title}</NotionUI.Content.Text>}
       >
         {isLoading ? (
           <NotionUI.Loader.ParentFull />
@@ -47,9 +49,5 @@ const AppLayout = styled(NotionUI.Layout.App)`
     nav {
       flex: unset;
     }
-  }
-  header > div {
-    flex: 1;
-    overflow: hidden;
   }
 `;

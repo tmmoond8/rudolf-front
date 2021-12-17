@@ -5,7 +5,7 @@ export interface WordBook {
     title: string;
     description: string;
     createdAt: string;
-    contents: { word: string; description: string }[] | string;
+    contents: { word: string; description: string }[];
   };
 }
 

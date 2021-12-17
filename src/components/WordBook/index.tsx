@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { colors } from 'notion-ui';
-import type { WordBook as WordBookType } from '../../types/model';
 import Navigation, { usePageNavigation } from './Navigation';
 import WordBookEditor from './WordBookEditor';
 
 interface Props {
-  contents: WordBookType['attributes']['contents'];
+  contents: {
+    word: string;
+    description: string;
+  }[];
 }
 
 const WordBook = ({ contents }: Props) => {

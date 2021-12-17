@@ -28,7 +28,11 @@ const auth = {
 };
 
 const wordNote = {
-  post: (data: Partial<WordBook['attributes']>) =>
+  post: (
+    data: Omit<Partial<WordBook['attributes']>, 'contents'> & {
+      contents: string;
+    }
+  ) =>
     request
       .post('/api/words-notes', {
         data,
