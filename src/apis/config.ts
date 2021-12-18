@@ -1,13 +1,14 @@
 import axios from 'axios';
+import localStorage from '../libs/localStorage';
 const instance = axios.create({
   baseURL: 'http://localhost:1337',
 });
 
 instance.interceptors.request.use((request) => {
   const { headers } = request;
-  if (headers) {
-    headers['Authorization'] =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjM5MzExMzM2LCJleHAiOjE2NDE5MDMzMzZ9.8GEHrFpuvljwqQcjAQ6Y2VCfkgdM1__CJaboBG0ssyg';
+  const token = localStorage.getToken();
+  if (headers && token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
   return request;
 });

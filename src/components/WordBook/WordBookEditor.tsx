@@ -1,46 +1,62 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { TextField, Content, Button, colors } from 'notion-ui';
+import { TextField, Content, Button } from 'notion-ui';
 import { debounce } from 'throttle-debounce';
+import { useRouter } from 'next/router';
 import type { SpreadsheetData } from '../../types/model';
+import type { WordBook as WordBookType } from '../../types/model';
 import APIS from '../../apis';
-import { wordBookStringify } from '../../libs';
+import { wordBookStringify, contentsToSpreadsheetData } from '../../libs';
 import SpreadSheetEditor from './SpreadsheetEditor';
 
-export default function WordBookEditor() {
-  const [title, setTitle] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [wordBook, setWordBook] = React.useState<SpreadsheetData>(
-    Array.from({ length: 10 }).map((_) => [
-      {
-        value: '',
-      },
-      {
-        value: '',
-      },
-    ])
+interface Props {
+  wordBook?: WordBookType['attributes'];
+  wordbookId?: number;
+}
+
+export default function WordBookEditor({ wordBook, wordbookId }: Props) {
+  const router = useRouter();
+  const [title, setTitle] = React.useState(wordBook?.title ?? '');
+  const [description, setDescription] = React.useState(
+    wordBook?.description ?? ''
   );
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isNew, isUpdate] = [!wordBook, wordBook];
+  const [wordBookSpreadsheet, setWordBookSpreadsheet] =
+    React.useState<SpreadsheetData>(
+      wordBook ? contentsToSpreadsheetData(wordBook.contents) : []
+    );
   const handleOnChange = debounce(
     300,
     React.useCallback((data: SpreadsheetData) => {
-      setWordBook(data);
+      setWordBookSpreadsheet(data);
     }, [])
   );
 
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      await APIS.wordNote.post({
-        title,
-        description,
-        contents: wordBookStringify(wordBook),
-        coverImage:
-          'https://user-images.githubusercontent.com/11402468/146219166-e024ce4e-4e9a-4da2-90bc-83e50015283c.jpeg?w=256&q=75',
-      });
+      if (isNew) {
+        await APIS.wordNote.post({
+          title,
+          description,
+          contents: wordBookStringify(wordBookSpreadsheet),
+          coverImage:
+            'https://user-images.githubusercontent.com/11402468/146219166-e024ce4e-4e9a-4da2-90bc-83e50015283c.jpeg?w=256&q=75',
+        });
+      }
+      if (isUpdate && wordbookId) {
+        await APIS.wordNote.put(wordbookId, {
+          ...wordBook,
+          title,
+          description,
+          contents: wordBookStringify(wordBookSpreadsheet),
+        });
+      }
     } catch (error) {
       console.error('error', error);
     }
+    router.replace('/');
   };
 
   return (
@@ -76,7 +92,7 @@ export default function WordBookEditor() {
           </Button>
         </div>
       </Form>
-      <SpreadSheetEditor data={wordBook} onChange={handleOnChange} />
+      <SpreadSheetEditor data={wordBookSpreadsheet} onChange={handleOnChange} />
     </Wrapper>
   );
 }

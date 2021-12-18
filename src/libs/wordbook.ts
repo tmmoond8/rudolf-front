@@ -1,4 +1,4 @@
-import type { SpreadsheetData } from '../types/model';
+import type { SpreadsheetData, WordBook } from '../types/model';
 
 export const wordBookStringify = (spreadsheet: SpreadsheetData) =>
   JSON.stringify(
@@ -7,3 +7,12 @@ export const wordBookStringify = (spreadsheet: SpreadsheetData) =>
       description,
     }))
   );
+
+export const contentsToSpreadsheetData = (
+  contents: WordBook['attributes']['contents']
+): SpreadsheetData => {
+  return contents.map(({ word, description }) => [
+    { value: word },
+    { value: description },
+  ]);
+};

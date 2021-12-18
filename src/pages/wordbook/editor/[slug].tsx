@@ -2,20 +2,22 @@ import React from 'react';
 import styled from '@emotion/styled';
 import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
-import WrodBook from '../../components/WordBook';
-import Layout from '../../components/Layout';
-import type { WordBook as WordBookType } from '../../types/model';
-import { useSWR } from '../../apis';
-import { useTitle } from '../../hooks';
+import { Loader } from 'notion-ui';
+import WrodBook from '../../../components/WordBook';
+import Layout from '../../../components/Layout';
+import type { WordBook as WordBookType } from '../../../types/model';
+import { useSWR } from '../../../apis';
+import { useTitle } from '../../../hooks';
 
-export default function WordBookPage() {
+export default function WordBookEditorPage() {
   const router = useRouter();
   const { slug } = router.query;
+  const isNew = slug === 'new';
   const { setTitle } = useTitle();
   const { data } = useSWR<AxiosResponse<WordBookType>>(
     `/api/words-notes/${slug}`,
     {
-      isPaused: () => !slug,
+      isPaused: () => isNew || !slug,
     }
   );
 
@@ -29,14 +31,16 @@ export default function WordBookPage() {
     return null;
   }, [data]);
 
-  const contents = React.useMemo(() => {
-    return wordBook ? wordBook.attributes.contents : [];
-  }, [wordBook]);
-
   return (
     <Layout>
       <Wrapper>
-        <WrodBook contents={contents} />
+        {!data && <Loader.ParentFull />}
+        {data && (
+          <WrodBook.Editor
+            wordbookId={slug ? Number(slug.toString()) : undefined}
+            wordBook={wordBook?.attributes}
+          />
+        )}
       </Wrapper>
     </Layout>
   );

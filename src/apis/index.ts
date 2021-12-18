@@ -38,6 +38,17 @@ const wordNote = {
         data,
       })
       .then((res) => res.data as any),
+  put: (
+    id: number,
+    data: Omit<Partial<WordBook['attributes']>, 'contents'> & {
+      contents: string;
+    }
+  ) =>
+    request
+      .put(`/api/words-notes/${id}`, {
+        data,
+      })
+      .then((res) => res.data as any),
 };
 
 export const APIS = {
