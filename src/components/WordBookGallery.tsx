@@ -5,10 +5,10 @@ import Link from 'next/link';
 import Image from './Image';
 import { getDateGoodLook } from '../libs';
 import { desktop } from '../styles';
-import type { WordBook } from '../types/model';
+import type { STR, WordBook } from '../types/model';
 
 interface Props {
-  wordBooks: WordBook[];
+  wordBooks: STR<WordBook>[];
 }
 
 export default function WordBookGallery({ wordBooks }: Props) {

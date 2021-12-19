@@ -10,7 +10,7 @@ import { wordBookStringify, contentsToSpreadsheetData } from '../../libs';
 import SpreadSheetEditor from './SpreadsheetEditor';
 
 interface Props {
-  wordBook?: WordBookType['attributes'];
+  wordBook?: WordBookType;
   wordbookId?: number;
 }
 

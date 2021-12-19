@@ -1,13 +1,14 @@
 import type { Matrix } from 'react-spreadsheet';
-export interface WordBook {
+export interface STR<T> {
   id: number;
-  attributes: {
-    coverImage: string;
-    title: string;
-    description: string;
-    createdAt: string;
-    contents: { word: string; description: string }[];
-  };
+  attributes: T;
+}
+export interface WordBook {
+  coverImage: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  contents: { word: string; description: string }[];
 }
 
 export interface ResponseLogin {

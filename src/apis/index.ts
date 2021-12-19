@@ -29,7 +29,7 @@ const auth = {
 
 const wordNote = {
   post: (
-    data: Omit<Partial<WordBook['attributes']>, 'contents'> & {
+    data: Omit<Partial<WordBook>, 'contents'> & {
       contents: string;
     }
   ) =>
@@ -40,7 +40,7 @@ const wordNote = {
       .then((res) => res.data as any),
   put: (
     id: number,
-    data: Omit<Partial<WordBook['attributes']>, 'contents'> & {
+    data: Omit<Partial<WordBook>, 'contents'> & {
       contents: string;
     }
   ) =>

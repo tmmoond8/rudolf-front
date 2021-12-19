@@ -4,7 +4,7 @@ import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import WrodBook from '../../components/WordBook';
 import Layout from '../../components/Layout';
-import type { WordBook as WordBookType } from '../../types/model';
+import type { STR, WordBook as WordBookType } from '../../types/model';
 import { useSWR } from '../../apis';
 import { useTitle } from '../../hooks';
 
@@ -12,7 +12,7 @@ export default function WordBookPage() {
   const router = useRouter();
   const { slug } = router.query;
   const { setTitle } = useTitle();
-  const { data } = useSWR<AxiosResponse<WordBookType>>(
+  const { data } = useSWR<AxiosResponse<STR<WordBookType>>>(
     `/api/words-notes/${slug}`,
     {
       isPaused: () => !slug,

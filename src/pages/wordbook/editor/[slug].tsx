@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Loader } from 'notion-ui';
 import WrodBook from '../../../components/WordBook';
 import Layout from '../../../components/Layout';
-import type { WordBook as WordBookType } from '../../../types/model';
+import type { STR, WordBook as WordBookType } from '../../../types/model';
 import { useSWR } from '../../../apis';
 import { useTitle } from '../../../hooks';
 
@@ -14,7 +14,7 @@ export default function WordBookEditorPage() {
   const { slug } = router.query;
   const isNew = slug === 'new';
   const { setTitle } = useTitle();
-  const { data } = useSWR<AxiosResponse<WordBookType>>(
+  const { data } = useSWR<AxiosResponse<STR<WordBookType>>>(
     `/api/words-notes/${slug}`,
     {
       isPaused: () => isNew || !slug,
@@ -26,19 +26,26 @@ export default function WordBookEditorPage() {
       if (data.data?.attributes.title) {
         setTitle(data.data?.attributes.title);
       }
-      return data?.data;
+      return data?.data.attributes;
     }
-    return null;
+    return {
+      title: '',
+      description: '',
+      contents: Array.from({ length: 10 }).map((_) => ({
+        word: '',
+        description: '',
+      })),
+    };
   }, [data]);
 
   return (
     <Layout>
       <Wrapper>
-        {!data && <Loader.ParentFull />}
-        {data && (
+        {!isNew && !data && <Loader.ParentFull />}
+        {(isNew || data) && (
           <WrodBook.Editor
             wordbookId={slug ? Number(slug.toString()) : undefined}
-            wordBook={wordBook?.attributes}
+            wordBook={wordBook as WordBookType}
           />
         )}
       </Wrapper>
@@ -49,3 +56,8 @@ export default function WordBookEditorPage() {
 const Wrapper = styled.div`
   height: calc(100% - 40px);
 `;
+
+function useScrollEvent() {
+  // if ()
+  const scrollable = document.querySelector('Descrop');
+}
