@@ -2290,10 +2290,10 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
-notion-ui@^0.3.10:
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.3.10.tgz#bd8c2ddffe6a3353fd26dc7f6647e2e90d917efb"
-  integrity sha512-71Rc7VMvKSOhz0+DAeLxJ+P3rEA82bREf7Jg8fA8cghUDmzMhGqgrWaU2ns7y9Fo8P/IV5ELE4fiIw3obdVg+w==
+notion-ui@^0.3.12-g:
+  version "0.3.12-g"
+  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.3.12-g.tgz#ab82dfe672ea9aa8c110c7251f9b3a0b2cff907e"
+  integrity sha512-ecWd+x6U+kO0Zu8qHsGE5VFbJRnT1tAITXOkqNSyWyVAkBnlEjkVheuM+j8O+CsMBww2hnsVHs0wAez2IZl65w==
 
 object-assign@^4.1.1:
   version "4.1.1"

@@ -1,4 +1,4 @@
-import type { SpreadsheetData, WordBook } from '../types/model';
+import type { SpreadsheetData, WordBook, Cell } from '../types/model';
 
 export const wordBookStringify = (spreadsheet: SpreadsheetData) =>
   JSON.stringify(
@@ -16,3 +16,15 @@ export const contentsToSpreadsheetData = (
     { value: description },
   ]);
 };
+
+export function insertInto(
+  data: SpreadsheetData,
+  index: number,
+  row: [Cell, Cell]
+) {
+  return [...data.slice(0, index), row, ...data.slice(index, -1)];
+}
+
+export function removeFrom(data: SpreadsheetData, index: number) {
+  return data.filter((_, idx) => idx !== index);
+}
