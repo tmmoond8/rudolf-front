@@ -1,8 +1,14 @@
 import type { Matrix } from 'react-spreadsheet';
+export interface ARR<T> {
+  data: STR<T>[];
+  meta: { page: number; pageSize: number; pageCount: number; total: number };
+}
+
 export interface STR<T> {
   id: number;
   attributes: T;
 }
+
 export interface WordBook {
   coverImage: string;
   title: string;
