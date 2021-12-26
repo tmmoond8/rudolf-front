@@ -9,7 +9,7 @@ export const wordBookStringify = (spreadsheet: SpreadsheetData) =>
   );
 
 export const contentsToSpreadsheetData = (
-  contents: WordBook['contents']
+  contents: WordBook['contencts']
 ): SpreadsheetData => {
   return contents.map(({ word, description }) => [
     { value: word },

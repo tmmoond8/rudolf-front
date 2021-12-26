@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import WrodBook from '../../components/WordBook';
 import Layout from '../../components/Layout';
@@ -12,8 +11,8 @@ export default function WordBookPage() {
   const router = useRouter();
   const { slug } = router.query;
   const { setTitle } = useTitle();
-  const { data } = useSWR<AxiosResponse<STR<WordBookType>>>(
-    `/api/words-notes/${slug}`,
+  const { data } = useSWR<STR<WordBookType>>(
+    `/api/words-notes/${slug}?populate=*`,
     {
       isPaused: () => !slug,
     }
@@ -21,6 +20,7 @@ export default function WordBookPage() {
 
   const wordBook = React.useMemo(() => {
     if (data) {
+      console.log('data', data);
       if (data.data?.attributes.title) {
         setTitle(data.data?.attributes.title);
       }

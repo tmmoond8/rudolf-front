@@ -5,8 +5,10 @@ export interface ARR<T> {
 }
 
 export interface STR<T> {
-  id: number;
-  attributes: T;
+  data: {
+    id: number;
+    attributes: T;
+  };
 }
 
 export interface WordBook {
@@ -15,6 +17,8 @@ export interface WordBook {
   description: string;
   createdAt: string;
   contents: { word: string; description: string }[];
+  author?: STR<User>;
+  tags?: ARR<{ tag: string }>;
 }
 
 export interface ResponseLogin {

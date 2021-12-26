@@ -3,7 +3,7 @@ import useSWR, { mutate as ddd } from 'swr';
 
 export default function useTitle() {
   const dataRef = React.useRef<string>('');
-  const { data, mutate } = useSWR('uititle', () => dataRef.current);
+  const { data, mutate } = useSWR('ui/title', () => dataRef.current);
 
   React.useEffect(() => {
     return () => {

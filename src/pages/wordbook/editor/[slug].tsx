@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import { Loader } from 'notion-ui';
 import WrodBook from '../../../components/WordBook';
@@ -14,12 +13,9 @@ export default function WordBookEditorPage() {
   const { slug } = router.query;
   const isNew = slug === 'new';
   const { setTitle } = useTitle();
-  const { data } = useSWR<AxiosResponse<STR<WordBookType>>>(
-    `/api/words-notes/${slug}`,
-    {
-      isPaused: () => isNew || !slug,
-    }
-  );
+  const { data } = useSWR<STR<WordBookType>>(`/api/words-notes/${slug}`, {
+    isPaused: () => isNew || !slug,
+  });
 
   const wordBook = React.useMemo(() => {
     if (data) {
