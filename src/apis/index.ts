@@ -1,4 +1,3 @@
-import type { AxiosResponse } from 'axios';
 import useOriginSWR, { SWRConfiguration } from 'swr';
 import { request } from './config';
 import type { ResponseLogin, WordBook } from '../types/model';
