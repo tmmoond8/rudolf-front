@@ -1,7 +1,8 @@
 import axios from 'axios';
 import localStorage from '../libs/localStorage';
+
 const instance = axios.create({
-  baseURL: 'http://localhost:1337',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 instance.interceptors.request.use((request) => {
