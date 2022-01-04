@@ -21,7 +21,7 @@ export default function WordBookGallery({ wordBooks }: Props) {
         }) => (
           <Link key={id} href={`/wordbook/${id}`}>
             <WordBookCard>
-              <CoverImage src={coverImage} width={137} height={200} />
+              <CoverImage src={coverImage} width={160} height={200} />
               <WordBookBody>
                 <Content.Text as="H3" fontSize={20}>
                   {title}
@@ -94,8 +94,5 @@ const Description = styled(Content.Text)`
 `;
 
 const CoverImage = styled(Image)`
-  max-height: unset !important;
-  min-height: unset !important;
-  height: auto !important;
-  margin: 0 0 auto 0 !important;
+  object-fit: cover !important;
 `;
