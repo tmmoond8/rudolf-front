@@ -20,7 +20,6 @@ export default function WordBookPage() {
 
   const wordBook = React.useMemo(() => {
     if (data) {
-      console.log('data', data);
       if (data.data?.attributes.title) {
         setTitle(data.data?.attributes.title);
       }

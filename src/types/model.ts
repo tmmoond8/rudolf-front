@@ -1,8 +1,13 @@
 import type { Matrix } from 'react-spreadsheet';
-export interface ARR<T> {
-  data: STR<T>[];
+export interface ArrResponse<T> {
+  data: ARR<T>;
   meta: { page: number; pageSize: number; pageCount: number; total: number };
 }
+
+export type ARR<T> = {
+  id: number;
+  attributes: T;
+}[];
 
 export interface STR<T> {
   data: {
@@ -18,7 +23,7 @@ export interface WordBook {
   createdAt: string;
   contents: { word: string; description: string }[];
   author?: STR<User>;
-  tags?: ARR<{ tag: string }>;
+  tags?: ArrResponse<{ tag: string }>;
 }
 
 export interface ResponseLogin {

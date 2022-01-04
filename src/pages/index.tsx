@@ -3,11 +3,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import WordBookGallery from '../components/WordBookGallery';
 import Layout from '../components/Layout';
-import type { ARR, WordBook } from '../types/model';
+import type { ArrResponse, WordBook } from '../types/model';
 import { useSWR } from '../apis';
 
 const Home: NextPage = () => {
-  const { data } = useSWR<ARR<WordBook>>(
+  const { data } = useSWR<ArrResponse<WordBook>>(
     '/api/words-notes?populate=tags,author'
   );
   const wordBooks = React.useMemo(() => {

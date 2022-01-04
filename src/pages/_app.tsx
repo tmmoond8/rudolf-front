@@ -14,11 +14,9 @@ function RudolfApp({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     Router.events.on('routeChangeStart', () => {
-      console.log('routeChangeStart');
       setIsLoading(true);
     });
     Router.events.on('routeChangeComplete', () => {
-      console.log('routeChangeComplete');
       setIsLoading(false);
     });
   }, []);
